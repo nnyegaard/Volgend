@@ -1,31 +1,36 @@
-###### Copyright ########
-__author__ = 'nnyegaard'#
-#########################
+###### Copyright ##################
+__author__ = 'nnyegaard'          #
+###################################
 
-###### Imports ######
-import requests     #
-import logging      #
-#####################
+###### Imports ####################
+import logging                    #
+from pyquery import PyQuery as pq #
+import re                         #
+###################################
 
 logging.basicConfig(filename='Model.log',level=logging.DEBUG)
 
-def Download_site(url):
+def Download_Links(site):
     """
-    Downloading a site and returning the text of the given site.
-    Using a simple check for the status code to see if we got the site
+    Downloading all the links on a site and returning the text of the links.
     """
-    r = requests.get(url)
-
-    if r.status_code != 200:
-        raise Exception("We did not get a status code of 200. The site may be down.")
-    else:
-        return r.text
+    if site != "":
+        linksOnSite = pq(url=site, parser="html")
+        return linksOnSite("a")
 
 
-def Extract_Site_Content(url, keyword):
+def Extract_Site_Content(site, keyword):
     """
 
     """
-    site = Download_site(url)
+    regex = re.compile(keyword+"\s\d+") #With case insensitive: "[Ff]airy [Tt]ail\s\d+" The parameter re.I should do that but it ain't working TODO: Find the parameter to make regex case insensitive
+    links = Download_Links(site)
     if keyword != "":
-        pass
+        for x in links:
+            if regex.match(links(x).text()):#regex.findall(links(x).text()) #links(x).text() == keyword:
+                logging.info(int(re.search('\d+',links(x).text()).group()))
+                return [token for token in links(x).text().split(" ") if token.isdigit()] #With a regex: int(re.search('\d+',links(x).text()).group())
+
+
+if __name__ == '__main__':
+    Extract_Site_Content("http://www.mangareader.net/135/fairy-tail.html", "Fairy Tail")

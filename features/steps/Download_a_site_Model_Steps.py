@@ -2,19 +2,19 @@ __author__ = 'nnyegaard'
 
 from behave import *
 
-@given("we have the model request installed")
+@given(u'we have the model PyQuery installed')
 def step(context):
     try:
-        import requests
+        import pyquery
     except ImportError, e:
         assert e is False
 
-@when("we call the method \"Download_site(url)\"")
+@when(u'we call the method \"Download_site(url)\"')
 def step(context):
     from VolgenModel import Model
-    context.site = Model.Download_site("https://www.google.com/")
+    context.site = Model.Download_Links("http://mangastream.com/")
 
-@then("we should not get an exception")
+@then(u'we should get a list that are not empty')
 def step(context):
-    assert context.site != Exception
+    assert context.site != []
 
