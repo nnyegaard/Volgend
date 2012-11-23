@@ -11,8 +11,8 @@ def step(context):
 
 @when(u'we call the method \"Download_site(url)\"')
 def step(context):
-    from VolgenModel import Model
-    context.site = Model.Download_Links("http://mangastream.com/")
+    from VolgenModel import GettingContent
+    context.site = GettingContent.Download_Links("http://mangastream.com/")
 
 @then(u'we should get a list that are not empty')
 def step(context):
