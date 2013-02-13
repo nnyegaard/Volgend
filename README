@@ -1,1 +1,15 @@
-This file was created by PyCharm 2.6.3 for binding GitHub repository
+Volgend - web scrapping library for series
+======================
+
+Volgend is a web scrapping library for series.
+Volgend is optimized for scrapping a website that contains information
+ about a entity with a name followed by a number, like series, eg. Friends 01.
+
+It uses pyquery for optimal speed when scrapping a site and are following a BDD development model.
+
+What it can do
+======================
+* Scrap a website by keyword
+* Save the extracted content as json
+* Sort and filter extracted content
+* Remove duplicate content
